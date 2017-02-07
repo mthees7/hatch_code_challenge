@@ -14,6 +14,15 @@
 //     $('#search-container').html('<pre>' + str + '</pre>');
 //   });
 // }
+var openWeatherMapID = 'e644ec33c271ca52c7361360d42d44b7'
+var cityID = '4138106'
+
+var openWeatherMapData;
+$.getJSON('http://api.openweathermap.org/data/2.5/forecast/city?id='+cityID+'&APPID='+openWeatherMapID, function(json){
+    openWeatherMapData = json;
+    console.log(openWeatherMapData)
+});
+
 
 var ctx = $('#myChart');
 var myChart = new Chart(ctx, {
@@ -22,7 +31,7 @@ var myChart = new Chart(ctx, {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [12, 9, 3, 5, 2, 3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
