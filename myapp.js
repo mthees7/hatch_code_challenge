@@ -26,7 +26,7 @@ $.getJSON('http://api.openweathermap.org/data/2.5/forecast/city?id='+cityID+'&AP
 
 var ctx = $('#myChart');
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
