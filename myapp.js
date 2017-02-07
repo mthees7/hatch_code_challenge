@@ -16,7 +16,7 @@
 // }
 
 var openWeatherMapID = 'e644ec33c271ca52c7361360d42d44b7'
-var cityID = '4517009'
+var cityID = '5103564'
 var ctx = $('#myChart');
 
 function getData(openWeatherMapID, cityID, ctx) {
@@ -24,23 +24,35 @@ function getData(openWeatherMapID, cityID, ctx) {
     $.getJSON('http://api.openweathermap.org/data/2.5/forecast/city?id='+cityID+'&APPID='+openWeatherMapID, function(json){
         openWeatherMapData = json;
         console.log(openWeatherMapData)
-        createChart(ctx, openWeatherMapData)
+        createDatasets(openWeatherMapData)
     });
 }
 
-function createChart(ctx, openWeatherMapData) {
+function createDatasets(openWeatherMapData) {
+    labels = []
+    data = []
+
+    for (i = 0; i < openWeatherMapData.list.length; i++) {
+        labels.push(openWeatherMapData.list[i].dt_txt)
+    }
+    for (i = 0; i < openWeatherMapData.list.length; i++) {
+        // data.push(openWeatherMapData.list[i].main.temp)
+        //converting to Farenheit
+        data.push((openWeatherMapData.list[i].main.temp*(9/5))-459.67)
+    }
+    createChart(ctx, labels, data, openWeatherMapData);
+}
+
+function createChart(ctx, labels, data, openWeatherMapData) {
 
     var chart = new Chart (ctx, {
 
         type: 'line',
         data: { 
-            labels: [openWeatherMapData.list[0].dt_txt, openWeatherMapData.list[1].dt_txt],
+            labels: labels,
             datasets: [{
-                label: 'Degrees \'Kelvin\' in '+openWeatherMapData.city.name,
-                data: [openWeatherMapData.list[0].main.temp, openWeatherMapData.list[1].main.temp],
-                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-                borderColor: ['rgba(255,99,132,1)'],
-                borderWidth: 1
+                label: 'Degrees \'Farenheit\' in '+openWeatherMapData.city.name,
+                data: data,
             }]
         },
         options: { 
