@@ -16,7 +16,7 @@
 // }
 
 var openWeatherMapID = 'e644ec33c271ca52c7361360d42d44b7'
-var cityID = '4138106'
+var cityID = '4517009'
 var ctx = $('#myChart');
 
 function getData(openWeatherMapID, cityID, ctx) {
@@ -31,11 +31,27 @@ function getData(openWeatherMapID, cityID, ctx) {
 function createChart(ctx, openWeatherMapData) {
 
     var chart = new Chart (ctx, {
+
         type: 'line',
         data: { 
-
+            labels: [openWeatherMapData.list[0].dt_txt, openWeatherMapData.list[1].dt_txt],
+            datasets: [{
+                label: 'Degrees \'Kelvin\' in '+openWeatherMapData.city.name,
+                data: [openWeatherMapData.list[0].main.temp, openWeatherMapData.list[1].main.temp],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255,99,132,1)'],
+                borderWidth: 1
+            }]
         },
-        options: { scales: { yAxes: [{ ticks: { beginAtZero:true } }] } } 
+        options: { 
+            scales: { 
+                yAxes: [{
+                    ticks: { 
+                        beginAtZero:true 
+                    } 
+                }] 
+            } 
+        } 
     })
 }
 
@@ -45,6 +61,7 @@ getData(openWeatherMapID, cityID, ctx)
 //==============================================
 // labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
 //             datasets: [{
+//
 //                 label: 'Degrees \'F\'',
 //                 data: [12, 9, 3, 5, 2, 3],
 //                 backgroundColor: ['rgba(255, 99, 132, 0.2)'],
